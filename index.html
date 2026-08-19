@@ -40,13 +40,13 @@
 <span>Figure series and changing patterns</span><span>Visual analogies and paired rules</span><span>2×2 and 3×3 matrices</span><span>Odd one out and classification</span><span>Shape machines and coded transformations</span><span>Rotation, reflection and symmetry</span><span>Paper folding, cube nets, labelled tower counting and block views</span><span>Overlays, hidden figures and line composition</span>
 </div><p class="fine-print">Question attributes include shape, position, direction, angle, number, size, shading, markers, overlap, symmetry and spatial arrangement. Full simulation uses five-option single-answer questions; learning and adaptive modes may also use select-two questions.</p></details>
 <div class="actions">
-<div class="mode-card"><button id="startBtn" type="button">Start full exam simulation — 80 questions</button><p class="mode-note">A paper using your selected balance is created before the timer starts. Displayed educational tasks are checked against this paper and one shared retained history across full, learning and adaptive modes. New tasks are used while the protected validated bank and freshness search can supply them. If a completely fresh paper cannot be generated, the practice will not start; protected questions are not silently repeated.</p></div>
-<div class="mode-card"><button class="secondary" id="adaptiveBtn" type="button">Start adaptive skills practice — up to 25 questions</button><p class="mode-note">Response-driven practice with no backtracking. Each locked response updates the next internal difficulty band.</p></div>
-<div class="mode-card"><button class="secondary" id="learnBtn" type="button">Start untimed learning practice — 25 questions</button><p class="mode-note"><strong>Recommended first.</strong> Finish the set, then review every diagram with the rule and worked answer.</p></div>
+<div class="mode-card"><button id="startBtn" type="button" disabled>Start full exam simulation — 80 questions</button><p class="mode-note">A paper using your selected balance is created before the timer starts. Displayed educational tasks are checked against this paper and one shared retained history across full, learning and adaptive modes. New tasks are used while the protected validated bank and freshness search can supply them. If a completely fresh paper cannot be generated, the practice will not start; protected questions are not silently repeated.</p></div>
+<div class="mode-card"><button class="secondary" id="adaptiveBtn" type="button" disabled>Start adaptive skills practice — up to 25 questions</button><p class="mode-note">Response-driven practice with no backtracking. Each locked response updates the next internal difficulty band.</p></div>
+<div class="mode-card"><button class="secondary" id="learnBtn" type="button" disabled>Start untimed learning practice — 25 questions</button><p class="mode-note"><strong>Recommended first.</strong> Finish the set, then review every diagram with the rule and worked answer.</p></div>
 </div>
-<div class="save-actions"><button class="secondary hidden" id="resumeBtn" type="button">Resume saved practice</button><button class="secondary hidden" id="clearSaveBtn" type="button">Delete saved practice</button></div>
+<div class="save-actions"><button class="secondary hidden" id="resumeBtn" type="button" disabled>Resume saved practice</button><button class="secondary hidden" id="clearSaveBtn" type="button">Delete saved practice</button></div><div class="feedback bad hidden" id="initialisationMessage" role="alert" aria-live="assertive"></div>
 <p class="fine-print">Progress is saved only in this browser on this device. Finishing or deleting a practice removes the saved attempt.</p>
-<div class="product-footer"><strong>Level Pass</strong> · Independent 11+ Non-Verbal &amp; Spatial Reasoning Practice · Build <span id="buildLabel">NVR-11.0.0</span> · © 2026 Level Pass<br/>Original procedural diagrams; no official provider questions or artwork are reproduced. <span class="audit-badge" id="auditBadge">Structural smoke check pending</span></div>
+<div class="product-footer"><strong>Level Pass</strong> · Independent 11+ Non-Verbal &amp; Spatial Reasoning Practice · Build <span id="buildLabel">NVR-13.0.0</span> · © 2026 Level Pass<br/>Original procedural diagrams; no official provider questions or artwork are reproduced. <span class="audit-badge" id="auditBadge">Structural smoke check pending</span></div>
 </div></section>
 <section class="screen hidden" id="examScreen"><div class="topbar"><div class="toprow"><div><strong id="examTitle">Non-Verbal Reasoning</strong> · <span id="paperCode">Paper</span> · <span id="progressText">Question 1 of 80</span> · <span id="answeredText">0 answered</span></div><div class="timer" id="timer" role="timer" aria-label="Time remaining">50:00</div></div><div class="meter" role="progressbar" aria-label="Question progress" aria-valuemin="1" aria-valuemax="80" aria-valuenow="1"><div class="meter-fill" id="progressFill"></div></div><div class="nav-grid" id="questionNav" aria-label="Question navigation"></div></div>
 <div class="question-wrap"><article class="panel question-card" id="questionPanel" tabindex="-1"><h2 class="q-number" id="questionNumber">Question 1</h2><div class="tag-row" id="tagRow"></div><div class="stimulus" id="stimulusBox"></div><p class="question-text" id="questionText"></p><div id="answerArea"></div><div class="feedback hidden" id="reviewFeedback" aria-live="polite"></div><div class="actions"><button class="secondary" id="prevBtn" type="button">Previous</button><button class="secondary" id="flagBtn" type="button">Flag question</button><button id="nextBtn" type="button">Next</button><button class="danger" id="finishBtn" type="button">Finish practice</button></div></article><aside class="panel side-card"><h2>Your answers</h2><p class="answer-summary" id="sideSummary">Select an answer, then move to the next question.</p><div id="miniReview"></div></aside></div></section>
@@ -54,7 +54,10 @@
 </main>
 <script>
 'use strict';
-const BUILD_ID='NVR-11.0.0';
+const BUILD_ID='NVR-13.0.0';
+function nvr13FatalStartupNotice(message){for(const id of ['startBtn','adaptiveBtn','learnBtn','resumeBtn']){const button=document.getElementById(id);if(button)button.disabled=true;}const badge=document.getElementById('auditBadge');if(badge){badge.textContent='Application initialisation failed — practice disabled';badge.style.borderColor='#e19a9a';badge.style.background='#fff5f5';badge.style.color='#9b1f1f';}const box=document.getElementById('initialisationMessage');if(box){box.textContent=`The application could not initialise safely, so practice controls remain disabled. ${String(message||'Please reload the page or contact support.')}`;box.classList.remove('hidden');}}
+window.addEventListener('error',event=>{if(window.NVR13_BOOTSTRAP_PASSED!==true)nvr13FatalStartupNotice(event&&event.message||'A startup error occurred.');});
+window.addEventListener('unhandledrejection',event=>{if(window.NVR13_BOOTSTRAP_PASSED!==true)nvr13FatalStartupNotice(event&&event.reason&&event.reason.message||event&&event.reason||'A startup promise failed.');});
 const SAVE_KEY='level-pass-eleven-plus-nvr-progress-v6';
 const PREFS_KEY='level-pass-eleven-plus-nvr-preferences-stable-v1';
 const HISTORY_KEY='level-pass-eleven-plus-nvr-history-stable-v1';
@@ -190,7 +193,7 @@ function runSelfAudit(){const failures=[],samples=[],old=svgCounter;let paperVal
 /* Level Pass NVR 3.0.0 audit-hardening layer. */
 const CONTENT_SCHEMA_V3='NVR-CONTENT-5.0.0';
 const VISUAL_SCHEMA_V3='NVR-VISUAL-5.0.0';
-const HISTORY_CAP_V3=90000;
+const HISTORY_CAP_V3=Number.POSITIVE_INFINITY; // NVR-12: no application-level history truncation.
 const HISTORY_SEARCH_ATTEMPTS_V3=96;
 const ATOMIC_SEGMENTS_V3=['top','right','bottom','left','midH','midV','upperL','upperR','lowerR','lowerL'];
 const SEGMENT_EXPANSION_V3={diagA:['upperL','lowerR'],diagB:['upperR','lowerL']};
@@ -2398,7 +2401,7 @@ generateOne = function(topic, difficulty, ctx) {
 const APP_BUILD_VERSION_V6 = BUILD_ID;
 const CONTENT_IDENTITY_SCHEMA_V6 = CONTENT_SCHEMA_V3; // Intentionally stable for unchanged educational tasks.
 const HISTORY_STORAGE_SCHEMA_V6 = 'NVR-HISTORY-1';
-const HISTORY_CAP_V6 = 90000;
+const HISTORY_CAP_V6 = Number.POSITIVE_INFINITY; // NVR-12: IndexedDB is authoritative and uncapped by the app.
 const LEGACY_HISTORY_KEYS_V6 = ['level-pass-eleven-plus-nvr-history-v5'];
 const LEGACY_PREFS_KEYS_V6 = ['level-pass-eleven-plus-nvr-preferences-v5'];
 let HISTORY_MEMORY_V6 = null;
@@ -5089,7 +5092,247 @@ Object.assign(window.NVR_TEST_API,{
 });
 
 
-el.startBtn.addEventListener('click',()=>startPractice('full'));el.adaptiveBtn.addEventListener('click',()=>startPractice('adaptive'));el.learnBtn.addEventListener('click',()=>startPractice('learning'));el.resumeBtn.addEventListener('click',resumePractice);el.clearSaveBtn.addEventListener('click',()=>{if(window.confirm('Delete the saved practice from this device?'))deleteSavedProgress()});el.prevBtn.addEventListener('click',()=>{if(exam.review)renderReviewQuestion(exam.index-1);else if(!exam.adaptive)go(-1)});el.nextBtn.addEventListener('click',()=>{if(exam.review){if(exam.index<exam.questions.length-1)renderReviewQuestion(exam.index+1);else backToResults()}else if(exam.adaptive)lockAdaptiveAndAdvance();else if(exam.index<exam.questions.length-1)go(1);else finishExam(false)});el.flagBtn.addEventListener('click',()=>{if(exam.review){backToResults();return}const q=currentQuestion();if(exam.flagged.has(q.uid))exam.flagged.delete(q.uid);else exam.flagged.add(q.uid);renderTop();el.flagBtn.textContent=exam.flagged.has(q.uid)?'Remove flag':'Flag question';saveProgress()});el.finishBtn.addEventListener('click',()=>finishExam(false));el.reviewBtn.addEventListener('click',()=>renderReviewQuestion(0));el.printPdfBtn.addEventListener('click',()=>window.print());el.retakeBtn.addEventListener('click',showStart);[el.timeAllowance,el.diagramSize,el.practiceBalance].forEach(n=>n.addEventListener('change',applyPreferences));el.reduceMotion.addEventListener('change',applyPreferences);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgress()});window.addEventListener('beforeunload',saveProgress);document.addEventListener('keydown',e=>{if(el.examScreen.classList.contains('hidden')||exam.review)return;if(/^[a-e]$/i.test(e.key)){const i=LETTERS.indexOf(e.key.toUpperCase()),q=currentQuestion();if(i<q.choices.length){e.preventDefault();selectChoice(i)}}else if(!exam.adaptive&&e.key==='ArrowLeft'){e.preventDefault();go(-1)}else if(!exam.adaptive&&e.key==='ArrowRight'){e.preventDefault();if(exam.index<exam.questions.length-1)go(1)}});document.getElementById('buildLabel').textContent=BUILD_ID;loadPreferences();updateResumeAvailability();runSelfAudit();
+/* =============================================================
+   NVR-13.0.0 — PERSISTENT ABSOLUTE NO-REPEAT HISTORY
+   IndexedDB is authoritative. The stable visible-task fingerprint
+   remains the primary key; canonical and exact identities remain
+   secondary guards. No application-level history truncation.
+   ============================================================= */
+const NVR12_DB_NAME='level-pass-eleven-plus-nvr-protected-history-v1';
+const NVR12_DB_VERSION=1;
+const NVR12_LEDGER_KEY='level-pass-eleven-plus-nvr-ledger-id-v1';
+const NVR12_META_KEY='level-pass-eleven-plus-nvr-history-meta-v12';
+const NVR12_STORE_STABLE='stableTasks';
+const NVR12_STORE_ID='canonicalGuards';
+const NVR12_STORE_FP='fingerprintGuards';
+const NVR12_STORE_META='metadata';
+const NVR12_LEDGER_INDEX='ledgerId';
+const NVR12_APPLICATION_HISTORY_CAP=null;
+const NVR12_MIN_PROCEDURAL_ATTEMPTS=12;
+const NVR12_WRITE_CHUNK=5000;
+const NVR12_BASE_HISTORY_DATA=historyDataV8;
+const NVR12_BASE_HISTORY_SETS=historySetsV8;
+const NVR12_BASE_CREATE_QUESTION_SET=createQuestionSet;
+const NVR12_BASE_RUN_SELF_AUDIT=runSelfAudit;
+
+const NVR12_HISTORY={
+  db:null,ledgerId:'',ready:false,healthy:false,initialising:false,lastError:null,
+  stable:new Set(),ids:new Set(),fps:new Set(),order:new Map(),ordinal:0,
+  writeTail:Promise.resolve(),pendingWrites:0,
+  diagnostics:{
+    schema:'NVR-PERSISTENT-HISTORY-12',build:BUILD_ID,storage:'IndexedDB',
+    databaseName:NVR12_DB_NAME,databaseVersion:NVR12_DB_VERSION,
+    applicationHistoryCap:NVR12_APPLICATION_HISTORY_CAP,
+    retentionPolicy:'No application-level truncation; every stored stable fingerprint remains protected until the browser/site data is deliberately cleared or storage becomes unavailable.',
+    historyStorageKey:HISTORY_KEY,stableVisibleTaskSchema:STABLE_VISIBLE_TASK_SCHEMA_V8,
+    migratedStable:0,migratedIds:0,migratedFingerprints:0,
+    stableCount:0,idGuardCount:0,fingerprintGuardCount:0,
+    persisted:null,storageEstimate:null,initialisedAt:null,lastWriteAt:null
+  }
+};
+let NVR12_READY_PROMISE=null;
+window.NVR12_READY_PROMISE=null;
+let NVR12_ACTION_BUSY=false;
+let NVR13_BOOTSTRAP_PASSED=false;
+window.NVR13_BOOTSTRAP_PASSED=false;
+
+function nvr12Request(request){return new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error||new Error('IndexedDB request failed'));});}
+function nvr12Transaction(transaction){return new Promise((resolve,reject)=>{transaction.oncomplete=()=>resolve();transaction.onerror=()=>reject(transaction.error||new Error('IndexedDB transaction failed'));transaction.onabort=()=>reject(transaction.error||new Error('IndexedDB transaction was aborted'));});}
+function nvr12Yield(){return new Promise(resolve=>setTimeout(resolve,0));}
+function nvr12ValidKey(value){return /^[0-9a-f]{16}$/.test(String(value||'').toLowerCase());}
+function nvr12Key(value){const text=String(value||'').toLowerCase();return nvr12ValidKey(text)?text:compactHistoryKeyV6(text);}
+function nvr12Primary(value){return `${NVR12_HISTORY.ledgerId}|${value}`;}
+function nvr12RandomLedger(){return `${compactHistoryKeyV6(freshSeedV11('LEDGER-A'))}${compactHistoryKeyV6(freshSeedV11('LEDGER-B'))}`;}
+function nvr12SetControls(disabled){for(const button of [el.startBtn,el.adaptiveBtn,el.learnBtn,el.resumeBtn])if(button)button.disabled=Boolean(disabled);}
+function nvr12Badge(text,state='pending'){
+  if(!el.auditBadge)return;el.auditBadge.textContent=text;
+  if(state==='good'){el.auditBadge.style.borderColor='#82c798';el.auditBadge.style.background='#f2fbf4';el.auditBadge.style.color='#0f6d2d';}
+  else if(state==='bad'){el.auditBadge.style.borderColor='#e19a9a';el.auditBadge.style.background='#fff5f5';el.auditBadge.style.color='#9b1f1f';}
+  else{el.auditBadge.style.borderColor='#d9bd68';el.auditBadge.style.background='#fffaf0';el.auditBadge.style.color='#7a5400';}
+}
+function nvr13InitialisationMessage(message=''){const box=document.getElementById('initialisationMessage');if(!box)return;box.textContent=String(message||'');box.classList.toggle('hidden',!message);}
+function nvr12RefreshCounts(){NVR12_HISTORY.diagnostics.stableCount=NVR12_HISTORY.stable.size;NVR12_HISTORY.diagnostics.idGuardCount=NVR12_HISTORY.ids.size;NVR12_HISTORY.diagnostics.fingerprintGuardCount=NVR12_HISTORY.fps.size;return NVR12_HISTORY.diagnostics;}
+function nvr12Metrics(){nvr12RefreshCounts();return Object.assign({},NVR12_HISTORY.diagnostics,{ready:NVR12_HISTORY.ready,healthy:NVR12_HISTORY.healthy,pendingWrites:NVR12_HISTORY.pendingWrites,lastError:NVR12_HISTORY.lastError&&String(NVR12_HISTORY.lastError.message||NVR12_HISTORY.lastError),bootstrapPassed:NVR13_BOOTSTRAP_PASSED});}
+function nvr12Fail(error){const failure=error instanceof Error?error:new Error(String(error));NVR13_BOOTSTRAP_PASSED=false;window.NVR13_BOOTSTRAP_PASSED=false;NVR12_HISTORY.healthy=false;NVR12_HISTORY.lastError=failure;NVR12_HISTORY.diagnostics.lastError=String(failure.message||failure);NVR12_HISTORY.diagnostics.lastErrorAt=new Date().toISOString();nvr12SetControls(true);nvr12Badge('Application initialisation failed — practice disabled','bad');nvr13InitialisationMessage(`The application could not initialise its protected no-repeat history, so practice has been disabled to protect question freshness. ${failure.message}`);console.error('NVR-13 protected-history failure',failure);return failure;}
+
+function nvr12OpenDatabase(){
+  if(!globalThis.indexedDB)return Promise.reject(new Error('IndexedDB is required to preserve the absolute no-repeat history.'));
+  return new Promise((resolve,reject)=>{
+    const request=indexedDB.open(NVR12_DB_NAME,NVR12_DB_VERSION);
+    request.onupgradeneeded=()=>{
+      const db=request.result;
+      for(const name of [NVR12_STORE_STABLE,NVR12_STORE_ID,NVR12_STORE_FP]){
+        const store=db.objectStoreNames.contains(name)?request.transaction.objectStore(name):db.createObjectStore(name,{keyPath:'pk'});
+        if(!store.indexNames.contains(NVR12_LEDGER_INDEX))store.createIndex(NVR12_LEDGER_INDEX,'ledgerId',{unique:false});
+      }
+      if(!db.objectStoreNames.contains(NVR12_STORE_META))db.createObjectStore(NVR12_STORE_META,{keyPath:'key'});
+    };
+    request.onsuccess=()=>{const db=request.result;db.onversionchange=()=>db.close();resolve(db);};
+    request.onerror=()=>reject(request.error||new Error('The protected-history database could not be opened.'));
+    request.onblocked=()=>reject(new Error('The protected-history database is blocked by another open copy of the app.'));
+  });
+}
+async function nvr12ReadMeta(key){const tx=NVR12_HISTORY.db.transaction(NVR12_STORE_META,'readonly'),done=nvr12Transaction(tx),result=await nvr12Request(tx.objectStore(NVR12_STORE_META).get(key));await done;return result||null;}
+async function nvr12WriteMeta(record){const tx=NVR12_HISTORY.db.transaction(NVR12_STORE_META,'readwrite'),done=nvr12Transaction(tx);tx.objectStore(NVR12_STORE_META).put(record);await done;return record;}
+async function nvr12ResolveLedger(){
+  let local='';try{local=localStorage.getItem(NVR12_LEDGER_KEY)||'';}catch{}
+  const meta=await nvr12ReadMeta('activeLedger');let ledger=/^[0-9a-f]{32}$/.test(local)?local:(meta&&/^[0-9a-f]{32}$/.test(meta.ledgerId)?meta.ledgerId:'');
+  if(!ledger)ledger=nvr12RandomLedger();
+  try{localStorage.setItem(NVR12_LEDGER_KEY,ledger);}catch(error){throw new Error(`The protected-history ledger identifier could not be retained: ${error.message}`);}
+  await nvr12WriteMeta({key:'activeLedger',ledgerId:ledger,updatedAt:new Date().toISOString(),build:BUILD_ID});return ledger;
+}
+async function nvr12LoadStore(storeName,target,prefix){
+  const tx=NVR12_HISTORY.db.transaction(storeName,'readonly'),done=nvr12Transaction(tx),index=tx.objectStore(storeName).index(NVR12_LEDGER_INDEX),primaryKeys=await nvr12Request(index.getAllKeys(IDBKeyRange.only(NVR12_HISTORY.ledgerId)));await done;
+  for(const primary of primaryKeys){const text=String(primary),split=text.indexOf('|'),key=(split>=0?text.slice(split+1):text).toLowerCase();if(nvr12ValidKey(key)){target.add(key);NVR12_HISTORY.order.set(`${prefix}:${key}`,++NVR12_HISTORY.ordinal);}}
+}
+async function nvr12ClearStore(storeName){
+  const tx=NVR12_HISTORY.db.transaction(storeName,'readwrite'),done=nvr12Transaction(tx),index=tx.objectStore(storeName).index(NVR12_LEDGER_INDEX),request=index.openCursor(IDBKeyRange.only(NVR12_HISTORY.ledgerId));
+  await new Promise((resolve,reject)=>{request.onsuccess=()=>{const cursor=request.result;if(!cursor){resolve();return;}cursor.delete();cursor.continue();};request.onerror=()=>reject(request.error||new Error(`Could not clear ${storeName}`));});await done;
+}
+async function nvr12PutKeys(storeName,values,source){
+  const keys=unique((values||[]).map(value=>String(value||'').toLowerCase()).filter(nvr12ValidKey));
+  for(let start=0;start<keys.length;start+=NVR12_WRITE_CHUNK){
+    const chunk=keys.slice(start,start+NVR12_WRITE_CHUNK),tx=NVR12_HISTORY.db.transaction(storeName,'readwrite'),done=nvr12Transaction(tx),store=tx.objectStore(storeName),now=new Date().toISOString();
+    for(const value of chunk)store.put({pk:nvr12Primary(value),ledgerId:NVR12_HISTORY.ledgerId,value,source,build:BUILD_ID,lastSeenAt:now,ordinal:++NVR12_HISTORY.ordinal});
+    await done;if(start+chunk.length<keys.length)await nvr12Yield();
+  }
+  return keys.length;
+}
+async function nvr12MigrateLegacy(){
+  let snapshot='';try{snapshot=localStorage.getItem(HISTORY_KEY)||'';}catch{}
+  const snapshotHash=hash128V3(`NVR12-LEGACY|${snapshot}`),metaKey=`legacyMigration|${NVR12_HISTORY.ledgerId}`,previous=await nvr12ReadMeta(metaKey);
+  if(previous&&previous.complete&&previous.snapshotHash===snapshotHash)return previous;
+  const legacy=NVR12_BASE_HISTORY_DATA(),sets=NVR12_BASE_HISTORY_SETS(legacy),stableKeys=Array.from(sets.stableKeys||[]),idKeys=Array.from(sets.idKeys||[]),fpKeys=Array.from(sets.fpKeys||[]);
+  if(stableKeys.length||idKeys.length||fpKeys.length)nvr12Badge(`Migrating ${stableKeys.length.toLocaleString()} protected tasks`,'pending');
+  const migratedStable=await nvr12PutKeys(NVR12_STORE_STABLE,stableKeys,'legacy-history-migration'),migratedIds=await nvr12PutKeys(NVR12_STORE_ID,idKeys,'legacy-history-migration'),migratedFps=await nvr12PutKeys(NVR12_STORE_FP,fpKeys,'legacy-history-migration');
+  const record={key:metaKey,ledgerId:NVR12_HISTORY.ledgerId,complete:true,snapshotHash,sourceHistoryKey:HISTORY_KEY,sourceSchema:legacy.schema||null,sourceBuild:legacy.diagnostics&&legacy.diagnostics.appBuildVersion||'legacy-or-unlabelled',migratedStable,migratedIds,migratedFps,completedAt:new Date().toISOString(),build:BUILD_ID};
+  await nvr12WriteMeta(record);NVR12_HISTORY.diagnostics.migratedStable=migratedStable;NVR12_HISTORY.diagnostics.migratedIds=migratedIds;NVR12_HISTORY.diagnostics.migratedFingerprints=migratedFps;return record;
+}
+async function nvr12StorageStatus(){const status={persisted:null,usage:null,quota:null};try{if(navigator.storage&&navigator.storage.persisted)status.persisted=await navigator.storage.persisted();}catch{}try{if(navigator.storage&&navigator.storage.estimate){const estimate=await navigator.storage.estimate();status.usage=Number(estimate.usage)||0;status.quota=Number(estimate.quota)||0;}}catch{}return status;}
+async function requestPersistentStorageV12(){await ensureHistoryReadyV12();let granted=null;try{if(navigator.storage&&navigator.storage.persist)granted=await navigator.storage.persist();else if(navigator.storage&&navigator.storage.persisted)granted=await navigator.storage.persisted();}catch{granted=false;}NVR12_HISTORY.diagnostics.persisted=granted;try{await nvr12WriteMeta({key:`persistence|${NVR12_HISTORY.ledgerId}`,ledgerId:NVR12_HISTORY.ledgerId,granted,checkedAt:new Date().toISOString(),build:BUILD_ID});}catch{}return granted;}
+async function initialiseHistoryV12(){
+  if(NVR12_HISTORY.ready)return nvr12Metrics();if(NVR12_HISTORY.initialising)return NVR12_READY_PROMISE;NVR12_HISTORY.initialising=true;nvr12SetControls(true);nvr12Badge('Preparing protected no-repeat history','pending');
+  try{
+    NVR12_HISTORY.db=await nvr12OpenDatabase();NVR12_HISTORY.ledgerId=await nvr12ResolveLedger();await nvr12MigrateLegacy();NVR12_HISTORY.stable.clear();NVR12_HISTORY.ids.clear();NVR12_HISTORY.fps.clear();NVR12_HISTORY.order.clear();NVR12_HISTORY.ordinal=0;
+    await nvr12LoadStore(NVR12_STORE_STABLE,NVR12_HISTORY.stable,'s');await nvr12LoadStore(NVR12_STORE_ID,NVR12_HISTORY.ids,'i');await nvr12LoadStore(NVR12_STORE_FP,NVR12_HISTORY.fps,'f');
+    const storage=await nvr12StorageStatus();NVR12_HISTORY.diagnostics.persisted=storage.persisted;NVR12_HISTORY.diagnostics.storageEstimate={usage:storage.usage,quota:storage.quota};NVR12_HISTORY.diagnostics.ledgerId=NVR12_HISTORY.ledgerId;NVR12_HISTORY.diagnostics.initialisedAt=new Date().toISOString();NVR12_HISTORY.ready=true;NVR12_HISTORY.healthy=true;NVR12_HISTORY.initialising=false;nvr12RefreshCounts();
+    try{localStorage.setItem(NVR12_META_KEY,JSON.stringify({schema:'NVR-HISTORY-META-12',build:BUILD_ID,database:NVR12_DB_NAME,ledgerId:NVR12_HISTORY.ledgerId,applicationHistoryCap:null,stableCount:NVR12_HISTORY.stable.size,updatedAt:new Date().toISOString()}));}catch{}
+    return nvr12Metrics();
+  }catch(error){NVR12_HISTORY.initialising=false;throw nvr12Fail(error);}
+}
+function ensureHistoryReadyV12(){if(NVR12_HISTORY.ready&&NVR12_HISTORY.healthy)return Promise.resolve(nvr12Metrics());if(!NVR12_READY_PROMISE){NVR12_READY_PROMISE=initialiseHistoryV12();window.NVR12_READY_PROMISE=NVR12_READY_PROMISE;}return NVR12_READY_PROMISE;}
+
+function historyDataV12(){
+  const view={__nvr12Live:true,schema:HISTORY_STORAGE_SCHEMA_V8,contentSchema:CONTENT_IDENTITY_SCHEMA_V6,stableVisibleTaskSchema:STABLE_VISIBLE_TASK_SCHEMA_V8,diagnostics:Object.assign({},ensureFreshnessDiagnosticsV7(),nvr12Metrics())};
+  Object.defineProperty(view,'entries',{enumerable:true,get:()=>Array.from(NVR12_HISTORY.ids,key=>`${key}:`)});Object.defineProperty(view,'stableKeysPacked',{enumerable:true,get:()=>packStableKeysV8(Array.from(NVR12_HISTORY.stable))});return view;
+}
+function historySetsV12(history){if(history&&history.__nvr12Live)return{idKeys:NVR12_HISTORY.ids,fpKeys:NVR12_HISTORY.fps,stableKeys:NVR12_HISTORY.stable,order:NVR12_HISTORY.order};return NVR12_BASE_HISTORY_SETS(history||{});}
+function nvr12QuestionRecord(question){
+  validateQuestion(question);const stableKey=stableVisibleTaskFingerprintV8(question),idKey=question.historyIdKey||compactHistoryKeyV6(question.canonicalTaskId),fpKey=question.historyFingerprintKey||compactHistoryKeyV6(exactTaskFingerprintV6(question));
+  return{stableKey,idKeys:unique([idKey,...(question.legacyIdKeys||[])].map(nvr12Key).filter(nvr12ValidKey)),fpKeys:unique([fpKey,...(question.legacyFpKeys||[])].map(nvr12Key).filter(nvr12ValidKey))};
+}
+async function nvr12PersistRecords(records,mode){
+  const tx=NVR12_HISTORY.db.transaction([NVR12_STORE_STABLE,NVR12_STORE_ID,NVR12_STORE_FP,NVR12_STORE_META],'readwrite'),done=nvr12Transaction(tx),stableStore=tx.objectStore(NVR12_STORE_STABLE),idStore=tx.objectStore(NVR12_STORE_ID),fpStore=tx.objectStore(NVR12_STORE_FP),metaStore=tx.objectStore(NVR12_STORE_META),now=new Date().toISOString();
+  for(const record of records){
+    stableStore.put({pk:nvr12Primary(record.stableKey),ledgerId:NVR12_HISTORY.ledgerId,value:record.stableKey,source:'question',build:BUILD_ID,mode,lastSeenAt:now});
+    for(const key of record.idKeys)idStore.put({pk:nvr12Primary(key),ledgerId:NVR12_HISTORY.ledgerId,value:key,source:'question',build:BUILD_ID,mode,lastSeenAt:now});
+    for(const key of record.fpKeys)fpStore.put({pk:nvr12Primary(key),ledgerId:NVR12_HISTORY.ledgerId,value:key,source:'question',build:BUILD_ID,mode,lastSeenAt:now});
+  }
+  metaStore.put({key:`ledgerMetrics|${NVR12_HISTORY.ledgerId}`,ledgerId:NVR12_HISTORY.ledgerId,build:BUILD_ID,applicationHistoryCap:null,stableCount:NVR12_HISTORY.stable.size,idGuardCount:NVR12_HISTORY.ids.size,fingerprintGuardCount:NVR12_HISTORY.fps.size,lastMode:mode,lastQuestionCount:records.length,lastWriteAt:now});await done;NVR12_HISTORY.diagnostics.lastWriteAt=now;nvr12RefreshCounts();
+}
+function nvr12QueueRecords(records,mode){
+  NVR12_HISTORY.pendingWrites++;const job=NVR12_HISTORY.writeTail.then(()=>nvr12PersistRecords(records,mode));NVR12_HISTORY.writeTail=job.then(()=>{NVR12_HISTORY.pendingWrites=Math.max(0,NVR12_HISTORY.pendingWrites-1);},error=>{NVR12_HISTORY.pendingWrites=Math.max(0,NVR12_HISTORY.pendingWrites-1);throw nvr12Fail(error);});void job.catch(()=>{});return job;
+}
+async function flushHistoryWritesV12(){await NVR12_HISTORY.writeTail;if(!NVR12_HISTORY.healthy)throw NVR12_HISTORY.lastError||new Error('Protected-history persistence failed.');return nvr12Metrics();}
+function recordHistoryV12(mode,questions){
+  if(!historyWritesEnabledV3)return true;if(!NVR12_HISTORY.ready||!NVR12_HISTORY.healthy)throw new Error('Protected history is not ready, so the practice cannot be served safely.');const records=(questions||[]).map(nvr12QuestionRecord);
+  for(const record of records){if(!NVR12_HISTORY.stable.has(record.stableKey)){NVR12_HISTORY.stable.add(record.stableKey);NVR12_HISTORY.order.set(`s:${record.stableKey}`,++NVR12_HISTORY.ordinal);}for(const key of record.idKeys)if(!NVR12_HISTORY.ids.has(key)){NVR12_HISTORY.ids.add(key);NVR12_HISTORY.order.set(`i:${key}`,++NVR12_HISTORY.ordinal);}for(const key of record.fpKeys)if(!NVR12_HISTORY.fps.has(key)){NVR12_HISTORY.fps.add(key);NVR12_HISTORY.order.set(`f:${key}`,++NVR12_HISTORY.ordinal);}}
+  nvr12RefreshCounts();nvr12QueueRecords(records,mode);return true;
+}
+async function clearProtectedLedgerV12(){await ensureHistoryReadyV12();await flushHistoryWritesV12();for(const store of [NVR12_STORE_STABLE,NVR12_STORE_ID,NVR12_STORE_FP])await nvr12ClearStore(store);NVR12_HISTORY.stable.clear();NVR12_HISTORY.ids.clear();NVR12_HISTORY.fps.clear();NVR12_HISTORY.order.clear();NVR12_HISTORY.ordinal=0;nvr12RefreshCounts();return nvr12Metrics();}
+async function setTestHistoryV12(values=[]){
+  await clearProtectedLedgerV12();const stable=[],ids=[],fps=[];
+  for(const value of values){if(value&&typeof value==='object'&&value.canonicalTaskId){const record=nvr12QuestionRecord(value);stable.push(record.stableKey);ids.push(...record.idKeys);fps.push(...record.fpKeys);}else if(value&&typeof value==='object'){if(value.stableKey)stable.push(nvr12Key(value.stableKey));if(value.idKey)ids.push(nvr12Key(value.idKey));if(value.fpKey)fps.push(nvr12Key(value.fpKey));if(value.entry){const parsed=parseHistoryEntryV8(String(value.entry));if(parsed.idKey)ids.push(parsed.idKey);if(parsed.fpKey)fps.push(parsed.fpKey);}}else{const text=String(value||'');if(nvr12ValidKey(text))stable.push(text.toLowerCase());else if(text.includes(':')){const parsed=parseHistoryEntryV8(text);if(parsed.idKey)ids.push(parsed.idKey);if(parsed.fpKey)fps.push(parsed.fpKey);}else ids.push(nvr12Key(text));}}
+  await nvr12PutKeys(NVR12_STORE_STABLE,stable,'test');await nvr12PutKeys(NVR12_STORE_ID,ids,'test');await nvr12PutKeys(NVR12_STORE_FP,fps,'test');stable.filter(nvr12ValidKey).forEach(key=>NVR12_HISTORY.stable.add(key));ids.filter(nvr12ValidKey).forEach(key=>NVR12_HISTORY.ids.add(key));fps.filter(nvr12ValidKey).forEach(key=>NVR12_HISTORY.fps.add(key));nvr12RefreshCounts();return historyDataV12();
+}
+async function seedSyntheticHistoryV12(count=90080,prefix='boundary',clear=true){
+  await ensureHistoryReadyV12();if(clear)await clearProtectedLedgerV12();const total=Math.max(0,Math.floor(Number(count)||0)),stable=[];for(let index=0;index<total;index++)stable.push(compactHistoryKeyV6(`${prefix}|stable|${index}`));await nvr12PutKeys(NVR12_STORE_STABLE,stable,'boundary-regression');stable.forEach(key=>NVR12_HISTORY.stable.add(key));nvr12RefreshCounts();return nvr12Metrics();
+}
+
+historyDataV8=historyDataV12;historyDataV6=historyDataV12;historyDataV3=historyDataV12;historyData=historyDataV12;
+historySetsV8=historySetsV12;historySetsV6=historySetsV12;
+recordHistoryV8=recordHistoryV12;recordHistory=recordHistoryV12;
+setTestHistoryV8=setTestHistoryV12;setTestHistoryV6=setTestHistoryV12;setTestHistoryV3=setTestHistoryV12;
+recentSignatureSet=function(){return new Set(NVR12_HISTORY.ids);};
+
+tryProceduralFamilyV11=function(family,difficulty,ctx,result){
+  const started=nowMsV11(),limit=Math.max(NVR12_MIN_PROCEDURAL_ATTEMPTS,Math.min(64,Number(ctx.proceduralAttemptsPerFamilyV11)||NVR11_PROCEDURAL_ATTEMPTS));let attempts=0,blocked=0,errors=0,lastError=null;
+  while(attempts<limit&&(attempts<NVR12_MIN_PROCEDURAL_ATTEMPTS||nowMsV11()-started<NVR11_FAMILY_SLICE_MS)){
+    attempts++;try{const accepted=acceptGeneratedV11(family.generator(difficulty,ctx),family,ctx);if(accepted){result.attempts=attempts;result.blocked=blocked;result.elapsedMs=nowMsV11()-started;result.minimumAttemptsGuaranteedV12=true;result.status='candidate-returned';return accepted;}blocked++;}catch(error){lastError=error;errors++;if(bankExhaustionErrorV11(error)){result.genuinelyExhausted=true;break;}}
+  }
+  result.attempts=attempts;result.blocked=blocked;result.errors=errors;result.elapsedMs=nowMsV11()-started;result.minimumAttemptsGuaranteedV12=attempts>=Math.min(limit,NVR12_MIN_PROCEDURAL_ATTEMPTS)||result.genuinelyExhausted;result.error=lastError&&String(lastError.message||lastError);result.status=result.genuinelyExhausted?'family-bank-genuinely-empty':(nowMsV11()-started>=NVR11_FAMILY_SLICE_MS?'procedural-time-slice-exhausted':'procedural-attempt-slice-exhausted');return null;
+};
+
+/* NVR-13.0.0 scheduler integration repair: the incompatible NVR-12 alternate scheduler was removed. The proven NVR-11 capacity-aware generateOne implementation remains live, together with the NVR-12 bounded procedural override and one-time complete-reservation retry. */
+
+createQuestionSet=function(mode,profile,options={}){
+  try{return NVR12_BASE_CREATE_QUESTION_SET(mode,profile,options);}catch(error){if(error&&error.code==='FRESH_RESERVATION_SEARCH_FAILED_V11'&&!options.__nvr12ReservationRetry){const scheduler=schedulerDiagnosticsV11();scheduler.automaticReservationRetriesV12=(scheduler.automaticReservationRetriesV12||0)+1;setRandomSeed(freshSeedV11(`RETRY-${mode}-${profile}`));return NVR12_BASE_CREATE_QUESTION_SET(mode,profile,Object.assign({},options,{__nvr12ReservationRetry:true}));}throw error;}
+};
+
+startPractice=async function(mode){
+  try{
+    await ensureHistoryReadyV12();await flushHistoryWritesV12();await requestPersistentStorageV12();clearInterval(exam.timerId);exam.mode=mode;exam.full=mode==='full';exam.adaptive=mode==='adaptive';exam.profile=el.practiceBalance.value;exam.seed=freshSeed(mode.toUpperCase());exam.paperCode=makePaperCode(mode,exam.seed);setRandomSeed(exam.seed);exam.answers={};exam.flagged=new Set();exam.index=0;exam.finished=false;exam.timedOut=false;exam.review=false;exam.results=[];exam.score=0;exam.maxScore=0;exam.adaptiveTarget=25;exam.adaptiveAbility=2.6;exam.adaptiveHistory=[];exam.adaptiveTopicPlan=createAdaptiveTopicPlan(exam.profile);exam.adaptiveUsed=new Set();exam.adaptiveFamilyUse={};exam.questions=exam.adaptive?[createNextAdaptiveQuestion(1)]:createQuestionSet(mode,exam.profile);await flushHistoryWritesV12();const mult=Number(el.timeAllowance.value);exam.timeMultiplier=mult;exam.timed=mode!=='learning'&&mult>0;const base=mode==='full'?3000:mode==='adaptive'?1800:0;exam.totalSeconds=exam.timed?Math.round(base*mult):0;exam.endsAt=exam.timed?Date.now()+exam.totalSeconds*1000:0;exam.lastSavedSecond=null;showExamScreen();renderQuestion();if(exam.timed){tickTimer();exam.timerId=setInterval(tickTimer,1000);}else{el.timer.textContent='Untimed';el.timer.classList.remove('low-time');el.timer.setAttribute('aria-label','Untimed practice');}saveProgress();scrollQuestionIntoView();return true;
+  }catch(error){console.error(error);window.alert(`The practice could not be generated safely. ${error.message}`);showStart();return false;}
+};
+lockAdaptiveAndAdvance=async function(){
+  const question=currentQuestion();if(!isAnswered(question)){el.reviewFeedback.textContent='Choose a complete answer before locking this adaptive question.';el.reviewFeedback.className='feedback bad';return;}const wasDisabled=el.nextBtn.disabled;el.nextBtn.disabled=true;
+  try{const result=scoreQuestion(question,exam.answers[question.uid]),before=exam.adaptiveAbility;exam.adaptiveAbility=clamp(before+(result.correct?.48:-.58),1,5);question.adaptiveLocked=true;exam.adaptiveHistory.push({number:exam.questions.length,topic:question.topic,level:question.adaptiveLevel,correct:result.correct,before,after:exam.adaptiveAbility});if(exam.questions.length>=exam.adaptiveTarget){finishExam(false,true);return;}const next=createNextAdaptiveQuestion(exam.questions.length+1);await flushHistoryWritesV12();exam.questions.push(next);exam.index=exam.questions.length-1;renderQuestion();saveProgress();scrollQuestionIntoView();}catch(error){console.error(error);window.alert(`The next adaptive question could not be stored safely. ${error.message}`);}finally{el.nextBtn.disabled=wasDisabled;}
+};
+async function runStartActionV12(action){if(NVR12_ACTION_BUSY||!NVR13_BOOTSTRAP_PASSED)return;NVR12_ACTION_BUSY=true;nvr12SetControls(true);try{await ensureHistoryReadyV12();await flushHistoryWritesV12();await action();}catch(error){nvr12Fail(error);}finally{NVR12_ACTION_BUSY=false;if(NVR12_HISTORY.healthy&&NVR13_BOOTSTRAP_PASSED)nvr12SetControls(false);else nvr12SetControls(true);updateResumeAvailability();}}
+
+runSelfAudit=function(){
+  const diagnostics=NVR12_BASE_RUN_SELF_AUDIT(),failures=(diagnostics.failures||[]).slice(),checks={
+    indexedDbReady:NVR12_HISTORY.ready&&Boolean(NVR12_HISTORY.db),storageHealthy:NVR12_HISTORY.healthy,
+    noApplicationCap:NVR12_APPLICATION_HISTORY_CAP===null&&HISTORY_CAP_V3===Number.POSITIVE_INFINITY&&HISTORY_CAP_V6===Number.POSITIVE_INFINITY&&HISTORY_CAP_V8===Number.POSITIVE_INFINITY,
+    stableSchemaPreserved:STABLE_VISIBLE_TASK_SCHEMA_V8==='NVR-STABLE-VISIBLE-TASK-1',historyKeyPreserved:HISTORY_KEY==='level-pass-eleven-plus-nvr-history-stable-v1',
+    livePointers:historyDataV8===historyDataV12&&recordHistoryV8===recordHistoryV12&&historySetsV8===historySetsV12,
+    proceduralMinimum:NVR12_MIN_PROCEDURAL_ATTEMPTS>=8,
+    readyPromiseExposed:window.NVR12_READY_PROMISE instanceof Promise,
+    eventHandlersInstalled:window.NVR13_EVENT_HANDLERS_INSTALLED===true,
+    liveTestApi:Boolean(window.NVR_TEST_API)&&window.NVR_TEST_API.generateOne===generateOne&&window.NVR_TEST_API.createQuestionSet===createQuestionSet&&window.NVR_TEST_API.recordHistory===recordHistoryV12&&window.NVR_TEST_API.selfAudit===runSelfAudit&&typeof window.NVR_TEST_API.historyMetricsV12==='function'&&typeof window.NVR_TEST_API.ensureHistoryReadyV12==='function'
+  };
+  for(const[name,passed]of Object.entries(checks))if(!passed)failures.push(`NVR-13 startup/retention gate failed: ${name}`);diagnostics.build=BUILD_ID;diagnostics.retentionSchemaV12='NVR-PERSISTENT-HISTORY-12';diagnostics.retentionChecksV12=checks;diagnostics.retentionMetricsV12=nvr12Metrics();diagnostics.applicationHistoryCap=null;diagnostics.failures=unique(failures);diagnostics.passed=diagnostics.failures.length===0;window.NVR_APP_DIAGNOSTICS=diagnostics;window.NVR_RETENTION_DIAGNOSTICS_V12=nvr12Metrics();if(diagnostics.passed)nvr12Badge(`Structural smoke check passed · ${FAMILIES.length} families`,'good');else{nvr12Badge(`Structural smoke check warning · ${diagnostics.failures.length}`,'bad');console.error('NVR-13 structural or retention smoke failures',diagnostics.failures);}return diagnostics;
+};
+
+Object.assign(window.NVR_TEST_API,{
+  buildId:BUILD_ID,validateQuestion,familyOracle:familyOracleV3,scoreQuestion,
+  historyData:historyDataV12,historySetsV8:historySetsV12,recordHistory:recordHistoryV12,setTestHistory:setTestHistoryV12,
+  ensureHistoryReadyV12,flushHistoryWritesV12,historyMetricsV12:nvr12Metrics,clearProtectedLedgerV12,seedSyntheticHistoryV12,requestPersistentStorageV12,
+  retentionArchitectureV12:{schema:'NVR-PERSISTENT-HISTORY-12',databaseName:NVR12_DB_NAME,databaseVersion:NVR12_DB_VERSION,stableStore:NVR12_STORE_STABLE,canonicalGuardStore:NVR12_STORE_ID,fingerprintGuardStore:NVR12_STORE_FP,applicationHistoryCap:null,stableVisibleTaskSchema:STABLE_VISIBLE_TASK_SCHEMA_V8,historyStorageKey:HISTORY_KEY},
+  createQuestionSet,generateOne,createNextAdaptiveQuestion,selfAudit:runSelfAudit,
+  startupStatusV13:()=>({build:BUILD_ID,readyPromise:window.NVR12_READY_PROMISE instanceof Promise,bootstrapPassed:NVR13_BOOTSTRAP_PASSED,handlersInstalled:window.NVR13_EVENT_HANDLERS_INSTALLED===true,history:nvr12Metrics()})
+});
+
+
+el.startBtn.addEventListener('click',()=>{void runStartActionV12(()=>startPractice('full'));});
+el.adaptiveBtn.addEventListener('click',()=>{void runStartActionV12(()=>startPractice('adaptive'));});
+el.learnBtn.addEventListener('click',()=>{void runStartActionV12(()=>startPractice('learning'));});
+el.resumeBtn.addEventListener('click',()=>{void runStartActionV12(async()=>resumePractice());});
+window.NVR13_EVENT_HANDLERS_INSTALLED=true;
+el.clearSaveBtn.addEventListener('click',()=>{if(window.confirm('Delete the saved practice from this device?'))deleteSavedProgress();});
+el.prevBtn.addEventListener('click',()=>{if(exam.review)renderReviewQuestion(exam.index-1);else if(!exam.adaptive)go(-1);});
+el.nextBtn.addEventListener('click',()=>{if(exam.review){if(exam.index<exam.questions.length-1)renderReviewQuestion(exam.index+1);else backToResults();}else if(exam.adaptive){void lockAdaptiveAndAdvance();}else if(exam.index<exam.questions.length-1)go(1);else finishExam(false);});
+el.flagBtn.addEventListener('click',()=>{if(exam.review){backToResults();return;}const q=currentQuestion();if(exam.flagged.has(q.uid))exam.flagged.delete(q.uid);else exam.flagged.add(q.uid);renderTop();el.flagBtn.textContent=exam.flagged.has(q.uid)?'Remove flag':'Flag question';saveProgress();});
+el.finishBtn.addEventListener('click',()=>finishExam(false));
+el.reviewBtn.addEventListener('click',()=>renderReviewQuestion(0));
+el.printPdfBtn.addEventListener('click',()=>window.print());
+el.retakeBtn.addEventListener('click',showStart);
+[el.timeAllowance,el.diagramSize,el.practiceBalance].forEach(node=>node.addEventListener('change',applyPreferences));
+el.reduceMotion.addEventListener('change',applyPreferences);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveProgress();});window.addEventListener('beforeunload',saveProgress);
+document.addEventListener('keydown',event=>{if(el.examScreen.classList.contains('hidden')||exam.review)return;if(/^[a-e]$/i.test(event.key)){const index=LETTERS.indexOf(event.key.toUpperCase()),q=currentQuestion();if(index<q.choices.length){event.preventDefault();selectChoice(index);}}else if(!exam.adaptive&&event.key==='ArrowLeft'){event.preventDefault();go(-1);}else if(!exam.adaptive&&event.key==='ArrowRight'){event.preventDefault();if(exam.index<exam.questions.length-1)go(1);}});
+document.getElementById('buildLabel').textContent=BUILD_ID;loadPreferences();updateResumeAvailability();nvr12SetControls(true);nvr13InitialisationMessage('');
+NVR12_READY_PROMISE=initialiseHistoryV12().then(()=>{const diagnostics=runSelfAudit();NVR13_BOOTSTRAP_PASSED=Boolean(diagnostics&&diagnostics.passed&&NVR12_HISTORY.healthy);window.NVR13_BOOTSTRAP_PASSED=NVR13_BOOTSTRAP_PASSED;if(diagnostics){diagnostics.retentionMetricsV12=nvr12Metrics();window.NVR_APP_DIAGNOSTICS=diagnostics;window.NVR_RETENTION_DIAGNOSTICS_V12=nvr12Metrics();}if(NVR13_BOOTSTRAP_PASSED){nvr13InitialisationMessage('');nvr12SetControls(false);}else{nvr12SetControls(true);nvr13InitialisationMessage('The application could not complete its startup safety checks, so practice controls remain disabled.');}updateResumeAvailability();return diagnostics;}).catch(error=>{nvr12Fail(error);return null;});window.NVR12_READY_PROMISE=NVR12_READY_PROMISE;
 </script>
 </body>
 </html>
